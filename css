@@ -1,0 +1,283 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #070707;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topbar {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 22px;
+  border-bottom: 1px solid #222;
+  background: rgba(10,10,10,.95);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.logo span {
+  color: #00e5ff;
+}
+
+.iconButton {
+  border: 0;
+  background: #151515;
+  color: white;
+  font-size: 25px;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+main {
+  width: 92%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 35px 0;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.hero {
+  text-align: center;
+  padding: 70px 20px;
+}
+
+.logoBig {
+  font-size: clamp(45px, 12vw, 90px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-shadow: 0 0 30px #00e5ff;
+}
+
+.hero p {
+  color: #aaa;
+  font-size: 18px;
+  margin: 15px 0 30px;
+}
+
+.mainButton {
+  border: none;
+  border-radius: 14px;
+  padding: 15px 25px;
+  background: #00e5ff;
+  color: #000;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mainButton:hover {
+  transform: scale(1.04);
+}
+
+.cards,
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.card,
+.videoCard,
+.gameCard,
+.settingsCard,
+.player,
+.musicPlayer {
+  background: #111;
+  border: 1px solid #292929;
+  border-radius: 20px;
+  padding: 25px;
+}
+
+.card {
+  cursor: pointer;
+  transition: .2s;
+}
+
+.card:hover,
+.videoCard:hover {
+  transform: translateY(-5px);
+  border-color: #00e5ff;
+}
+
+.cardIcon,
+.gameIcon {
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+.card p,
+.videoCard p,
+.player p,
+.musicPlayer p,
+.gameCard p {
+  color: #999;
+  margin-top: 8px;
+}
+
+h1 {
+  margin-bottom: 25px;
+  font-size: 38px;
+}
+
+.thumbnail {
+  height: 150px;
+  border-radius: 14px;
+  background: #191919;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+.player,
+.musicPlayer,
+.gameCard {
+  text-align: center;
+  max-width: 600px;
+  margin: auto;
+}
+
+.playerIcon {
+  font-size: 70px;
+  color: #00e5ff;
+  margin-bottom: 15px;
+}
+
+#playerStatus,
+#videoStatus {
+  margin-top: 20px;
+  color: #00e5ff;
+}
+
+.disc {
+  width: 130px;
+  height: 130px;
+  margin: auto auto 25px;
+  border-radius: 50%;
+  background: #181818;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 55px;
+  border: 2px solid #00e5ff;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 25px 0;
+}
+
+.controls button {
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: #222;
+  color: white;
+  font-size: 18px;
+}
+
+.controls .playButton {
+  background: #00e5ff;
+  color: black;
+}
+
+.progress {
+  height: 6px;
+  background: #292929;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#progressBar {
+  width: 0%;
+  height: 100%;
+  background: #00e5ff;
+}
+
+.settingsCard label {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 1px solid #222;
+}
+
+.menu {
+  position: fixed;
+  right: 20px;
+  top: 80px;
+  width: 200px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 10px;
+  display: none;
+  z-index: 200;
+}
+
+.menu.open {
+  display: block;
+}
+
+.menu button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: white;
+  text-align: left;
+  padding: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menu button:hover {
+  background: #222;
+}
+
+footer {
+  text-align: center;
+  color: #666;
+  padding: 30px;
+}
+
+@media (max-width: 600px) {
+  main {
+    width: 94%;
+  }
+
+  .hero {
+    padding: 45px 10px;
+  }
+
+  .logoBig {
+    font-size: 48px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+}
