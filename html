@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>JCOPLAY</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="logo">JCO<span>PLAY</span></div>
+
+    <button id="menuButton" class="iconButton">☰</button>
+  </header>
+
+  <main>
+
+    <section id="home" class="page active">
+      <div class="hero">
+        <div class="logoBig">JCOPLAY</div>
+        <p>Your entertainment hub</p>
+
+        <button class="mainButton" onclick="openPage('play')">
+          ▶ PLAY NOW
+        </button>
+      </div>
+
+      <div class="cards">
+        <div class="card" onclick="openPage('videos')">
+          <div class="cardIcon">🎬</div>
+          <h2>Videos</h2>
+          <p>Watch your favorite videos.</p>
+        </div>
+
+        <div class="card" onclick="openPage('music')">
+          <div class="cardIcon">🎵</div>
+          <h2>Music</h2>
+          <p>Enjoy your music.</p>
+        </div>
+
+        <div class="card" onclick="openPage('games')">
+          <div class="cardIcon">🎮</div>
+          <h2>Games</h2>
+          <p>Play and have fun.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="play" class="page">
+      <h1>Play</h1>
+
+      <div class="player">
+        <div class="playerIcon">▶</div>
+        <h2>JCOPLAY Player</h2>
+        <p>Select something to start.</p>
+
+        <button class="mainButton" onclick="startPlayer()">
+          START
+        </button>
+
+        <div id="playerStatus"></div>
+      </div>
+    </section>
+
+    <section id="videos" class="page">
+      <h1>Videos</h1>
+
+      <div class="videoGrid">
+        <div class="videoCard" onclick="selectVideo('Video 1')">
+          <div class="thumbnail">▶</div>
+          <h3>Video 1</h3>
+          <p>JCOPLAY video</p>
+        </div>
+
+        <div class="videoCard" onclick="selectVideo('Video 2')">
+          <div class="thumbnail">▶</div>
+          <h3>Video 2</h3>
+          <p>JCOPLAY video</p>
+        </div>
+
+        <div class="videoCard" onclick="selectVideo('Video 3')">
+          <div class="thumbnail">▶</div>
+          <h3>Video 3</h3>
+          <p>JCOPLAY video</p>
+        </div>
+      </div>
+
+      <p id="videoStatus"></p>
+    </section>
+
+    <section id="music" class="page">
+      <h1>Music</h1>
+
+      <div class="musicPlayer">
+        <div class="disc">♪</div>
+
+        <h2 id="songTitle">No song selected</h2>
+        <p>JCOPLAY Music</p>
+
+        <div class="controls">
+          <button onclick="previousSong()">⏮</button>
+          <button class="playButton" onclick="toggleMusic()">▶</button>
+          <button onclick="nextSong()">⏭</button>
+        </div>
+
+        <div class="progress">
+          <div id="progressBar"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="games" class="page">
+      <h1>Games</h1>
+
+      <div class="gameCard">
+        <div class="gameIcon">🎮</div>
+        <h2>JCOPLAY Mini Game</h2>
+        <p>Press the button as many times as you can.</p>
+
+        <button class="mainButton" onclick="gameClick()">
+          CLICK
+        </button>
+
+        <div id="score">Score: 0</div>
+      </div>
+    </section>
+
+    <section id="settings" class="page">
+      <h1>Settings</h1>
+
+      <div class="settingsCard">
+        <label>
+          Dark Mode
+          <input type="checkbox" id="darkMode" checked>
+        </label>
+
+        <label>
+          Animations
+          <input type="checkbox" id="animations" checked>
+        </label>
+      </div>
+    </section>
+
+  </main>
+
+  <nav id="menu" class="menu">
+    <button onclick="openPage('home')">Home</button>
+    <button onclick="openPage('videos')">Videos</button>
+    <button onclick="openPage('music')">Music</button>
+    <button onclick="openPage('games')">Games</button>
+    <button onclick="openPage('settings')">Settings</button>
+  </nav>
+
+  <footer>
+    <p>© 2026 JCOPLAY</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
