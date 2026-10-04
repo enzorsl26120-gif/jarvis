@@ -1,0 +1,137 @@
+const pages = document.querySelectorAll(".page");
+const menu = document.getElementById("menu");
+const menuButton = document.getElementById("menuButton");
+
+menuButton.addEventListener("click", () => {
+  menu.classList.toggle("open");
+});
+
+function openPage(pageName) {
+  pages.forEach(page => {
+    page.classList.remove("active");
+  });
+
+  const selectedPage = document.getElementById(pageName);
+
+  if (selectedPage) {
+    selectedPage.classList.add("active");
+  }
+
+  menu.classList.remove("open");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function startPlayer() {
+  document.getElementById("playerStatus").textContent =
+    "Player started successfully.";
+}
+
+function selectVideo(name) {
+  document.getElementById("videoStatus").textContent =
+    name + " selected.";
+}
+
+const songs = [
+  "JCOPLAY Song 1",
+  "JCOPLAY Song 2",
+  "JCOPLAY Song 3"
+];
+
+let currentSong = 0;
+let playing = false;
+let progress = 0;
+
+function updateSong() {
+  document.getElementById("songTitle").textContent =
+    songs[currentSong];
+}
+
+function toggleMusic() {
+  playing = !playing;
+
+  const button = document.querySelector(".playButton");
+
+  button.textContent = playing ? "⏸" : "▶";
+
+  if (playing) {
+    startProgress();
+  }
+}
+
+function startProgress() {
+  if (!playing) return;
+
+  progress += 1;
+
+  if (progress >= 100) {
+    progress = 0;
+    nextSong();
+  }
+
+  document.getElementById("progressBar").style.width =
+    progress + "%";
+
+  setTimeout(startProgress, 1000);
+}
+
+function nextSong() {
+  currentSong++;
+
+  if (currentSong >= songs.length) {
+    currentSong = 0;
+  }
+
+  progress = 0;
+  updateSong();
+}
+
+function previousSong() {
+  currentSong--;
+
+  if (currentSong < 0) {
+    currentSong = songs.length - 1;
+  }
+
+  progress = 0;
+  updateSong();
+}
+
+let score = 0;
+
+function gameClick() {
+  score++;
+
+  document.getElementById("score").textContent =
+    "Score: " + score;
+}
+
+const darkMode = document.getElementById("darkMode");
+const animations = document.getElementById("animations");
+
+darkMode.addEventListener("change", () => {
+  if (!darkMode.checked) {
+    document.body.style.background = "#eeeeee";
+    document.body.style.color = "#111";
+  } else {
+    document.body.style.background = "#070707";
+    document.body.style.color = "white";
+  }
+});
+
+animations.addEventListener("change", () => {
+  if (!animations.checked) {
+    document.querySelectorAll("*").forEach(element => {
+      element.style.transition = "none";
+    });
+  } else {
+    document.querySelectorAll("*").forEach(element => {
+      element.style.transition = "";
+    });
+  }
+});
+
+updateSong();
