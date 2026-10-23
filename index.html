@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050914">
+  <title>JARVIS AI</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at top, #102844, #050914 65%);
+      color: #eaf8ff;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      text-align: center;
+    }
+    header {
+      padding: 24px 12px;
+      border-bottom: 1px solid #1d789b;
+      letter-spacing: 4px;
+      color: #64e5ff;
+      font-weight: 800;
+    }
+    main { padding: 24px 18px; max-width: 600px; margin: auto; }
+    .orb {
+      width: 180px; height: 180px; margin: 24px auto;
+      border: 2px solid #48dfff; border-radius: 50%;
+      display: grid; place-items: center;
+      box-shadow: 0 0 25px #00bfff, inset 0 0 30px #006b9b;
+      animation: pulse 3s infinite ease-in-out;
+    }
+    .core {
+      width: 115px; height: 115px; border-radius: 50%;
+      border: 2px dashed #a6f3ff;
+      display: grid; place-items: center;
+      font-size: 42px; color: #72efff;
+    }
+    @keyframes pulse {
+      50% { box-shadow: 0 0 45px #00cfff, inset 0 0 40px #006b9b; }
+    }
+    .panel {
+      margin-top: 22px; padding: 20px;
+      background: #0b1929cc; border: 1px solid #185675;
+      border-radius: 18px;
+    }
+    button {
+      background: #073f59; color: #eafaff;
+      border: 1px solid #41d8ff; border-radius: 12px;
+      padding: 13px 16px; margin: 6px; font-size: 15px;
+      font-weight: 700;
+    }
+    button:active { background: #087da0; }
+    #status { color: #8cecff; min-height: 24px; }
+    video { width: 100%; border-radius: 12px; background: #02060b; }
+    .cube-wrap { height: 130px; display: grid; place-items: center; perspective: 500px; }
+    .cube {
+      width: 65px; height: 65px; border: 2px solid #61e9ff;
+      box-shadow: 0 0 22px #00cfff;
+      transform: rotateX(30deg) rotateY(30deg);
+      animation: spin 5s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotateX(390deg) rotateY(390deg); }
+    }
+    footer { padding: 28px; color: #6d9aaf; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>J.A.R.V.I.S // AI SYSTEM</header>
+  <main>
+    <div class="orb"><div class="core">J</div></div>
+    <h1>Bonjour, monsieur.</h1>
+    <p id="status">Système prêt. En attente de vos commandes.</p>
+
+    <section class="panel">
+      <h2>ASSISTANT VOCAL</h2>
+      <button id="speak">🔊 PARLER</button>
+      <button id="listen">🎙️ MICRO</button>
+    </section>
+
+    <section class="panel">
+      <h2>VISION EN DIRECT</h2>
+      <video id="camera" autoplay playsinline muted></video>
+      <p id="cameraStatus">Caméra désactivée</p>
+      <button id="cameraButton">ACTIVER LA CAMÉRA</button>
+    </section>
+
+    <section class="panel">
+      <h2>HOLOGRAMME 3D</h2>
+      <div class="cube-wrap"><div class="cube"></div></div>
+      <p>Prototype d'objet 3D animé</p>
+    </section>
+  </main>
+  <footer>JARVIS AI · PROTOTYPE PERSONNEL</footer>
+
+  <script>
+    const status = document.getElementById('status');
+
+    function speak(message) {
+      status.textContent = message;
+      if (!('speechSynthesis' in window)) {
+        status.textContent = 'Voix non prise en charge par ce navigateur.';
+        return;
+      }
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.lang = 'fr-FR';
+      const voices = speechSynthesis.getVoices();
+      const frenchVoice = voices.find(v =>
+        v.lang.startsWith('fr') && /Thomas|Henri|Paul/i.test(v.name)
+      ) || voices.find(v => v.lang.startsWith('fr'));
+      if (frenchVoice) utterance.voice = frenchVoice;
+      utterance.rate = 0.92;
+      utterance.pitch = 0.8;
+      speechSynthesis.speak(utterance);
+    }
+
+    document.getElementById('speak').onclick = () =>
+      speak('Bonjour, monsieur. JARVIS est opérationnel.');
+
+    document.getElementById('listen').onclick = () => {
+      const Recognition = window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+      if (!Recognition) {
+        status.textContent = 'Micro vocal indisponible ici. Essayez un navigateur compatible.';
+        return;
+      }
+      const recognition = new Recognition();
+      recognition.lang = 'fr-FR';
+      recognition.onstart = () => status.textContent = 'Je vous écoute...';
+      recognition.onresult = event => {
+        const text = event.results[0][0].transcript.toLowerCase();
+        status.textContent = 'Vous avez dit : ' + text;
+        if (text.includes('bonjour')) speak('Bonjour, monsieur.');
+        else if (text.includes('heure')) speak('Il est ' +
+          new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}));
+        else speak('Commande reçue : ' + text);
+      };
+      recognition.onerror = () => status.textContent = 'Micro indisponible ou autorisation refusée.';
+      recognition.start();
+    };
+
+    document.getElementById('cameraButton').onclick = async () => {
+      const video = document.getElementById('camera');
+      const cameraStatus = document.getElementById('cameraStatus');
+      if (!navigator.mediaDevices?.getUserMedia) {
+        cameraStatus.textContent = 'Caméra indisponible. Ouvrez le site en HTTPS.';
+        return;
+      }
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' }, audio: false
+        });
+        video.srcObject = stream;
+        cameraStatus.textContent = 'Caméra activée.';
+      } catch (error) {
+        cameraStatus.textContent = 'Accès refusé ou caméra indisponible.';
+      }
+    };
+
+    speechSynthesis?.getVoices();
+  </script>
+</body>
+</html>
